@@ -19,8 +19,8 @@
 ;**************************************************************
             ORG $3000
             
-FIRSTNUM    FCB $0A   
-SECNUM      FCB $FF
+MULTIPLICAND    FCB $80   
+MULTIPLIER      FCB $02
 PRODUCT     RMB 2
 
 
@@ -28,9 +28,10 @@ PRODUCT     RMB 2
 Entry:
 _Startup:
 
-          LDAA FIRSTNUM ; Get the first number into ACCA
-          ADDA SECNUM ; Add to it the second number
-          STAA PRODUCT ; and store the sum
+          LDAA MULTIPLICAND ; Get the first number into ACCA
+          LDAB MULTIPLIER ; Store multiplier to ACCB
+          MUL  ; multiplies ACCA and ACCB
+          STD PRODUCT ;stores ACCA then ACCB to PRODUCT
           SWI ; break to the monitor  
 ;**************************************************************
 ;*                 Interrupt Vectors                          *
